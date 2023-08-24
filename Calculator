@@ -1,42 +1,96 @@
-import tkinter as tk
+from tkinter import *
+win = Tk()
+#win.geometry('250x400')
 
-def press(key):
-    current = result_var.get()
-    if key == "=":
-        try:
-            result = eval(current)
-            result_var.set(result)
-        except Exception as e:
-            result_var.set("Error")
-    elif key == "C":
-        result_var.set("")
-    else:
-        result_var.set(current + key)
+#frame = Frame(win,width=500,height=200)
+#frame.place(anchor='center')
 
-root = tk.Tk()
-root.title("Simple Calculator")
+mylabel= Label(win,text='Calculator',font=('Times New Roman',30))
+mylabel.grid(row=0,column=0,columnspan=4)
 
-result_var = tk.StringVar()
-result_var.set("")
+e = Entry(win, width=18,font=('Algerian',18))
+e.grid(row=1,column=0,columnspan=4)
 
-entry = tk.Entry(root, textvariable=result_var, font=("Helvetica", 16), justify="right")
-entry.grid(row=0, column=0, columnspan=4)
+def onclick(num):
+    x=e.get()
+    e.delete(0,END)
+    e.insert(0,str(x)+str(num))
+    
+def clear():
+    e.delete(0,END)
 
-buttons = [
-    "7", "8", "9", "+",
-    "4", "5", "6", "-",
-    "1", "2", "3", "*",
-    "C", "0", "=", "/"
-]
+def add():
+    global first,op
+    op='+'
+    first = e.get()
+    e.delete(0,END)
+    
+def subtract():
+    global first,op
+    op='-'
+    first = e.get()
+    e.delete(0,END)
+def mul():
+    global first,op
+    op='*'
+    first = e.get()
+    e.delete(0,END)
+    
+def div():
+    global first,op
+    op='/'
+    first = e.get()
+    e.delete(0,END)
+    
+def equal():
+    second = e.get()
+    if op == '+':
+        result = float(first)+float(second)
+    elif op == '-':
+        result = float(first)-float(second)
+    elif op == '*':
+        result = float(first)*float(second)
+    elif op == '/':
+        result = float(first)/float(second)
+    e.delete(0,END)    
+    e.insert(0,result)
+    
+    
+mybutton=Button(win,text="1",padx=10,relief=RIDGE,width=5,command = lambda:onclick(1))
+mybutton.grid(row=4,column=0)
 
-row_val = 1
-col_val = 0
+mybutton1=Button(win,text="2",padx=10,relief=RIDGE,width=5,command = lambda:onclick(2))
+mybutton1.grid(row=4,column=1,)
+mybutton2=Button(win,text="3",padx=10,relief=RIDGE,width=5,command = lambda:onclick(3))
+mybutton2.grid(row=4,column=2)
+mybutton3=Button(win,text="4",padx=10,relief=RIDGE,width=5,command = lambda:onclick(4))
+mybutton3.grid(row=3,column=0)
+mybutton4=Button(win,text="5",padx=10,relief=RIDGE,width=5,command = lambda:onclick(5))
+mybutton4.grid(row=3,column=1)
+mybutton5=Button(win,text="6",padx=10,relief=RIDGE,width=5,command = lambda:onclick(6))
+mybutton5.grid(row=3,column=2)
+mybutton6=Button(win,text="7",padx=10,relief=RIDGE,width=5,command = lambda:onclick(7))
+mybutton6.grid(row=2,column=0)
+mybutton7=Button(win,text="8",padx=10,relief=RIDGE,width=5,command = lambda:onclick(8))
+mybutton7.grid(row=2,column=1)
+mybutton8=Button(win,text="9",padx=10,relief=RIDGE,width=5,command = lambda:onclick(9))
+mybutton8.grid(row=2,column=2)
+mybutton9=Button(win,text="C",padx=10,relief=RIDGE,width=5,command = clear)
+mybutton9.grid(row=5,column=1)
+mybutton10=Button(win,text="0",padx=10,relief=RIDGE,width=5,command = lambda:onclick(0))
+mybutton10.grid(row=5,column=0)
+mybutton11=Button(win,text=".",padx=10,relief=RIDGE,width=5)
+mybutton11.grid(row=5,column=2)
+mybutton12=Button(win,text="+",padx=10,relief=RIDGE,width=5,command=add)
+mybutton12.grid(row=4,column=3)
+mybutton13=Button(win,text="-",padx=10,relief=RIDGE,width=5,command=subtract)
+mybutton13.grid(row=3,column=3)
+mybutton14=Button(win,text="*",padx=10,relief=RIDGE,width=5,command=mul)
+mybutton14.grid(row=2,column=3)
+mybutton15=Button(win,text="/",padx=10,relief=RIDGE,width=5,command=div)
+mybutton15.grid(row=1,column=3)
+mybutton16=Button(win,text="=",padx=10,relief=RIDGE,width=5,command=equal)
+mybutton16.grid(row=5,column=3)
 
-for button in buttons:
-    tk.Button(root, text=button, font=("Helvetica", 16), width=5, height=2, command=lambda key=button: press(key)).grid(row=row_val, column=col_val)
-    col_val += 1
-    if col_val > 3:
-        col_val = 0
-        row_val += 1
 
-root.mainloop()
+win.mainloop()
